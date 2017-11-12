@@ -61,7 +61,7 @@ Graph input_graph(){
     int n,m;
     cin >> n >> m;
     g.n=n;
-    g.adj = adj_t(n);
+    g.adj = adj_t(n,vd(n));
     for (int i = 0; i < m; i++)
     {
         int u, v;
@@ -70,4 +70,9 @@ Graph input_graph(){
         g.add_edge(u, v, w);
     }
     return g;
+}
+void to_1d(double* gadj,Graph &g){
+    int n=g.n;
+    for(int i=0;i<n;i++) for(int j=0;j<n;j++)
+        gadj[i*n+j]=g.adj[i][j];
 }

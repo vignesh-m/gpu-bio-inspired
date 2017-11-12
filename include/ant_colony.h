@@ -12,16 +12,21 @@ using namespace std;
 typedef pair<int, double> edge_t;
 typedef vector<int> vi;
 typedef vector<double> vd;
-typedef vector<vector<edge_t> > adj_t;
+typedef vector<vector<double> > adj_t;
 typedef vector<vector<double> > pmap_t;
 
 class Graph
 {
+    // adj -> adjacency matrix
   public:
     int n;
     adj_t adj; // vertex, weight
     Graph(string filename);
     Graph() {}
+    Graph(int _n) {
+        n = _n;
+        adj = adj_t(n, vd(n));
+    }
     Graph(adj_t _adj) : adj(_adj)
     {
         n = adj.size();
@@ -35,47 +40,23 @@ class Graph
 };
 
 
-class Ant
-{
-  public:
-    pmap_t &pmap;
-    Graph &g;
-    vi path;
-    vi reached;
-    int n;
-    double cost;
-    Ant(pmap_t &_ph, Graph &_g) : pmap(_ph), g(_g)
-    {
-        n = g.n;
-        path = vi(n);
-        reached = vi(n);
-        cost = 0.0;
-    };
+int ant_colony_opt_tsp(int n, double* gadj,int *path, double &cost);
 
-    int next_vertex(int i,double &rcost);
-    vi gen_sol();
-    void ph_update();
-};
-int ant_colony_opt_tsp(vi &path, double &cost,Graph &g);
 
 inline void print_vi(vi a){
     for(int i=0;i<a.size();i++) cout<<a[i]<<" ";
 }
-inline void print_ant(Ant &a)
-{
-    cout<<"Ant path: ";
-    print_vi(a.path);
-    cout<<" , cost: "<<a.cost;
+inline __host__ __device__ void print_vi(int* a, int n){
+    for(int i=0;i<n;i++) printf("%d ",a[i]);
 }
 inline void print_graph(Graph &g)
 {
     for (int i = 0; i < g.n; i++)
     {
         cout << i << ": ";
-        for (int j=0;j<g.adj[i].size();j++)
+        for (int j=0;j<g.n;j++)
         {
-            edge_t e = g.adj[i][j];
-            cout << "("<<e.first<<","<<e.second<<")" << " ";
+            cout<<g.adj[i][j]<<" ";
         }
         cout << "\n";
     }
@@ -86,4 +67,5 @@ double rand01();
 void coords_to_edge(string infile, string outfile);
 Graph input_graph();
 void adjmat_to_edge(string infile, string outfile);
+void to_1d(double* gadj,Graph &g);
 #endif

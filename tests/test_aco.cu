@@ -7,13 +7,16 @@ int main(){
 
     cout << "Hello\n";
     Graph g = input_graph();
+    int n=g.n;
     print_graph(g);
 
-    vi path;
+    int *path = new int[n];
     double cost;
-    ant_colony_opt_tsp(path, cost, g);
+    double* gadj = new double[n*n];
+    to_1d(gadj,g);
+    ant_colony_opt_tsp(g.n, gadj, path, cost);
 
-    print_vi(path);
+    print_vi(path,n);
     cout<<" "<<cost<<"\n";
 
     printf("pls\n");
