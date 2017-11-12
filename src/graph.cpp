@@ -14,7 +14,7 @@ Graph::Graph(string filename)
     // N(no of vertices) M(no of edges)
     // <node 1> <node 2> <distance>
     ifstream f;
-    f.open(filename, ios::in);
+    f.open(filename.c_str(), ios::in);
     int m;
     f >> n >> m;
     adj.resize(n);

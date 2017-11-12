@@ -24,8 +24,8 @@ void coords_to_edge(string infile, string outfile){
     // n
     // <node> <x coord> <y coord>
     // outputs our format (from graph read)
-    ifstream in(infile);
-    ofstream out(outfile);
+    ifstream in(infile.c_str(), ios::in);
+    ofstream out(outfile.c_str());
     int n;
     in>>n;
     vd x(n),y(n);
@@ -44,8 +44,8 @@ void adjmat_to_edge(string infile, string outfile){
     // a00 a01 ....
     // .
     // outputs our format (from graph read)
-    ifstream in(infile);
-    ofstream out(outfile);
+    ifstream in(infile.c_str());
+    ofstream out(outfile.c_str());
     int n;
     in>>n;
     out<<n<<" "<<n*n<<"\n";
