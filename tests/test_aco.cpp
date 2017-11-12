@@ -11,14 +11,15 @@ int main()
     srand(time(NULL));
 
     cout << "Hello\n";
-    char *s = "../graphs/test03";
+    string s = "../graphs/test03";
     Graph g(s);
-    cout << g << "\n";
+    print_graph(g);
 
     vi path;
     double cost;
     ant_colony_opt_tsp(path, cost,g);
-    cout<<path<<" "<<cost<<"\n";
+    print_vi(path);
+    cout<<" "<<cost<<"\n";
 
     // convert();
 }

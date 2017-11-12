@@ -6,21 +6,21 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
-#include "prettyprint.hpp"
+#include <cmath>
 
 using namespace std;
 typedef pair<int, double> edge_t;
 typedef vector<int> vi;
 typedef vector<double> vd;
-typedef vector<vector<edge_t>> adj_t;
-typedef vector<vector<double>> pmap_t;
+typedef vector<vector<edge_t> > adj_t;
+typedef vector<vector<double> > pmap_t;
 
 class Graph
 {
   public:
     int n;
     adj_t adj; // vertex, weight
-    Graph(char *filename);
+    Graph(string filename);
     Graph(adj_t _adj) : adj(_adj)
     {
         n = adj.size();
@@ -57,23 +57,27 @@ class Ant
 };
 int ant_colony_opt_tsp(vi &path, double &cost,Graph &g);
 
-inline ostream &operator<<(ostream &out, const Ant &a)
-{
-    out<<"Ant path: "<<a.path<<" , cost: "<<a.cost;
-    return out;
+inline void print_vi(vi a){
+    for(int i=0;i<a.size();i++) cout<<a[i]<<" ";
 }
-inline ostream &operator<<(ostream &out, const Graph &g)
+inline void print_ant(Ant &a)
+{
+    cout<<"Ant path: ";
+    print_vi(a.path);
+    cout<<" , cost: "<<a.cost;
+}
+inline void print_graph(Graph &g)
 {
     for (int i = 0; i < g.n; i++)
     {
-        out << i << ": ";
-        for (edge_t e : g.adj[i])
+        cout << i << ": ";
+        for (int j=0;j<g.adj[i].size();j++)
         {
-            out << e << " ";
+            edge_t e = g.adj[i][j];
+            cout << "("<<e.first<<","<<e.second<<")" << " ";
         }
-        out << "\n";
+        cout << "\n";
     }
-    return out;
 }
 int randint(int);
 int randprob(double);

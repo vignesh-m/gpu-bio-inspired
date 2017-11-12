@@ -23,8 +23,9 @@ int Ant::next_vertex(int i, double &rcost)
     vi vert;
     double tot = 0;
     int nleft = 0;
-    for (edge_t e : g.adj[i])
+    for (int k=0;k<g.adj[i].size();k++)
     {
+        edge_t e = g.adj[i][k];
         int j = e.first;
         double w = e.second;
         if (!reached[j])
@@ -69,7 +70,8 @@ vi Ant::gen_sol()
         reached[j] = 1;
     }
     // add path[n-1]-path[0] cost
-    for(edge_t e: g.adj[path[n-1]]){
+    for(int i=0;i<g.adj[path[n-1]].size(); i++){
+        edge_t e = g.adj[path[n-1]][i];
         if(e.first==0) cost += e.second;
     }
     return path;
@@ -112,6 +114,7 @@ int ant_colony_opt_tsp(vi &path, double &cost,Graph &g)
         {
             ants[i].ph_update();
         }
-        cout<<ants[0]<<"\n";
+        print_ant(ants[0]);
+        cout<<"\n";
     }
 }

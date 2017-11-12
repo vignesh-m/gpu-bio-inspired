@@ -6,7 +6,7 @@ void Graph::add_edge(int i, int j, double weight)
     adj[j].push_back(make_pair(i, weight));
 }
 
-Graph::Graph(char *filename)
+Graph::Graph(string filename)
 {
     // read from file
     // Format:
