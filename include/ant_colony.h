@@ -21,6 +21,7 @@ class Graph
     int n;
     adj_t adj; // vertex, weight
     Graph(string filename);
+    Graph() {}
     Graph(adj_t _adj) : adj(_adj)
     {
         n = adj.size();
@@ -83,5 +84,6 @@ int randint(int);
 int randprob(double);
 double rand01();
 void coords_to_edge(string infile, string outfile);
+Graph input_graph();
 void adjmat_to_edge(string infile, string outfile);
 #endif

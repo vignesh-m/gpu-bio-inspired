@@ -1,0 +1,8 @@
+make: Warning: File `makefile' has modification time 2.2e+04 s in the future
+make: warning:  Clock skew detected.  Your build may be incomplete.
+make: Warning: File `makefile' has modification time 2.2e+04 s in the future
+src/ant_colony.cu(128): warning: missing return statement at end of non-void function "ant_colony_opt_tsp"
+
+src/ant_colony.cu(128): warning: missing return statement at end of non-void function "ant_colony_opt_tsp"
+
+make: warning:  Clock skew detected.  Your build may be incomplete.

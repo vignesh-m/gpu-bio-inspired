@@ -87,6 +87,15 @@ void Ant::ph_update(){
     u = 0;
     pmap[v][u] = (1- PH_EVAP)*pmap[v][u] + 1/cost;
 }
+
+
+
+__global__ void test_k(Ant** a){
+    int id = threadIdx.x;
+    printf("id: %d %f\n",id,a[id]->cost);
+    
+}
+
 int ant_colony_opt_tsp(vi &path, double &cost,Graph &g)
 {
     /*
@@ -94,27 +103,33 @@ int ant_colony_opt_tsp(vi &path, double &cost,Graph &g)
         Takes weighted graph input <g>, fills up best found path in <path>
     */
     int n = g.n;
-    int NI = 100,
-        NA = 100;
+    int NI = 10,
+        NA = 10;
         
     pmap_t p(n, vd(n, 1e-5));
     cost=1.0e10;
     for (int iter = 0; iter < NI; iter++)
     {
         vector<Ant> ants(NA, Ant(p, g));
+        Ant* ant_ptrs[NA];
         for (int i= 0; i< NA; i++)
         {
+            ant_ptrs[i] = &ants[i];
             ants[i].gen_sol();
             if(ants[i].cost<cost){
                 cost = ants[i].cost;
                 path = ants[i].path;
             }
         }
+/*
+        test_k<<<1,NA>>>(ants);
+        cudaThreadSynchronize();
         for (int i= 0; i< NA; i++)
         {
             ants[i].ph_update();
         }
         print_ant(ants[0]);
+*/
         cout<<"\n";
     }
 }

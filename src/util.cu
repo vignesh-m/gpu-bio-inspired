@@ -55,3 +55,19 @@ void adjmat_to_edge(string infile, string outfile){
         out<<i<<" "<<j<<" "<<w<<"\n";
     }
 }
+
+Graph input_graph(){
+    Graph g;
+    int n,m;
+    cin >> n >> m;
+    g.n=n;
+    g.adj = adj_t(n);
+    for (int i = 0; i < m; i++)
+    {
+        int u, v;
+        double w;
+        cin >> u >> v >> w;
+        g.add_edge(u, v, w);
+    }
+    return g;
+}
