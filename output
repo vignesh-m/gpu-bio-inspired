@@ -1,0 +1,6 @@
+rm -f error output test_aco_cu output2 error2 src/graph.o src/util.o src/ant_colony.o
+nvcc -I./include -c src/graph.cu -o src/graph.o
+nvcc -I./include -c src/util.cu -o src/util.o
+nvcc -I./include -c src/ant_colony.cu -o src/ant_colony.o
+nvcc -I./include tests/test_aco.cu  src/graph.o src/util.o src/ant_colony.o -o test_aco_cu
+Hello

@@ -2,8 +2,8 @@
 
 void Graph::add_edge(int i, int j, double weight)
 {
-    adj[i].push_back(make_pair(j, weight));
-    adj[j].push_back(make_pair(i, weight));
+    adj[i][j]=weight;
+    adj[j][i]=weight;
 }
 
 Graph::Graph(string filename)
@@ -14,10 +14,10 @@ Graph::Graph(string filename)
     // N(no of vertices) M(no of edges)
     // <node 1> <node 2> <distance>
     ifstream f;
-    f.open(filename, ios::in);
+    f.open(filename.c_str(), ios::in);
     int m;
     f >> n >> m;
-    adj.resize(n);
+    adj.resize(n, vd(n));
     for (int i = 0; i < m; i++)
     {
         int u, v;

@@ -1,0 +1,21 @@
+#! /bin/bash
+#PBS -o output
+#PBS -e error
+#PBS -l cput=800:00:00
+mkdir -p $HOME/jobs 
+tpdir=`echo $PBS_JOBID | cut -f 1 -d .`  
+tempdir=$HOME/work/job$tpdir  
+mkdir -p $tempdir  
+cd $tempdir  
+cp -R $PBS_O_WORKDIR/* .  
+rm -rf build
+mkdir build
+cd build
+cmake ..
+make clean
+make
+./test_aco_cu
+cd ..
+mv ../job$tpdir $HOME/jobs/.
+
+ 

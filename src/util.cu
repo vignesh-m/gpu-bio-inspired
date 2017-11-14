@@ -24,8 +24,8 @@ void coords_to_edge(string infile, string outfile){
     // n
     // <node> <x coord> <y coord>
     // outputs our format (from graph read)
-    ifstream in(infile);
-    ofstream out(outfile);
+    ifstream in(infile.c_str(), ios::in);
+    ofstream out(outfile.c_str());
     int n;
     in>>n;
     vd x(n),y(n);
@@ -44,8 +44,8 @@ void adjmat_to_edge(string infile, string outfile){
     // a00 a01 ....
     // .
     // outputs our format (from graph read)
-    ifstream in(infile);
-    ofstream out(outfile);
+    ifstream in(infile.c_str());
+    ofstream out(outfile.c_str());
     int n;
     in>>n;
     out<<n<<" "<<n*n<<"\n";
@@ -54,4 +54,25 @@ void adjmat_to_edge(string infile, string outfile){
         in>>w;
         out<<i<<" "<<j<<" "<<w<<"\n";
     }
+}
+
+Graph input_graph(){
+    Graph g;
+    int n,m;
+    cin >> n >> m;
+    g.n=n;
+    g.adj = adj_t(n,vd(n));
+    for (int i = 0; i < m; i++)
+    {
+        int u, v;
+        double w;
+        cin >> u >> v >> w;
+        g.add_edge(u, v, w);
+    }
+    return g;
+}
+void to_1d(double* gadj,Graph &g){
+    int n=g.n;
+    for(int i=0;i<n;i++) for(int j=0;j<n;j++)
+        gadj[i*n+j]=g.adj[i][j];
 }
