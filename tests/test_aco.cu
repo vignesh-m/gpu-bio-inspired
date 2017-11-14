@@ -8,7 +8,7 @@ int main(){
     cout << "Hello\n";
     Graph g = input_graph();
     int n=g.n;
-    print_graph(g);
+    //print_graph(g);
 
     int *path = new int[n];
     double cost;
@@ -19,6 +19,5 @@ int main(){
     print_vi(path,n);
     cout<<" "<<cost<<"\n";
 
-    printf("pls\n");
-    cudaThreadSynchronize();
+    cudaDeviceSynchronize();
 }

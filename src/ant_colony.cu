@@ -1,5 +1,6 @@
 #include <iostream>
 #include "ant_colony.h"
+#include <ctime>
 #include <curand_kernel.h>
 
 double PH_EVAP = 0.5;
@@ -55,16 +56,35 @@ __device__ void gen_sol(int* path,double* cost,int n,double* gadj, double* pmap,
     *cost += gadj[path[n-1]*n + path[0]];
 }
 
+/*
+__device__ void atomicUpdate(unsigned long long* pval_addr, double cost){
+    // update pval using cost.
+    // pval = (1-PH_EVAP)*pval + 1/cost;
+    unsigned long long old = *pval_addr, assumed;
+    do {
+        assumed = old;
+        double newval = :
+        old = atomicCAS(pval_addr, assumed, newval);
+    } while(assumed != old);
+    
+}
+*/
 
 void ph_update(int n,int* path, double* cost, double* pmap){
+    /*printf("updating: ");
+    print_vi(path, n);
+    printf(", cost: %f\n", *cost);
+    */
     int v = path[0],u;
     for(int i=1; i<n;i++){
         u = path[i];
         // update ph at edge v-u
+        //printf("update edge %d-%d\n",v,u);
         pmap[v*n+u] = (1- PH_EVAP)*pmap[v*n+u] + 1/(*cost);
         v = u;
     }
     u = 0;
+    //printf("update edge %d-%d\n",v,u);
     pmap[v*n+u] = (1- PH_EVAP)*pmap[v*n+u] + 1/(*cost);
 }
 
@@ -94,8 +114,10 @@ int ant_colony_opt_tsp(int n, double* gadj, int *path, double &cost)
         Ant Colony System, specific to TSP
         Takes weighted graph input <g>, fills up best found path in <path>
     */
-    int NI = 100,
-        NA = 100;
+    int NI = 1000,
+        NA = 10;
+
+    clock_t st = clock();
         
     double *p = new double[n*n];
     for(int i=0;i<n*n;i++) p[i]=1e-5;
@@ -140,7 +162,17 @@ int ant_colony_opt_tsp(int n, double* gadj, int *path, double &cost)
         if(mini!=-1){
             for(int i=0;i<n;i++) path[i]=paths[mini*n+i];
         }
-
+        delete[] paths;
+        delete[] costs;
+        cudaFree(gadj_d);
+        cudaFree(p_d);
+        cudaFree(paths_d);
+        cudaFree(costs_d);
     }
+    delete[] p;
+    clock_t en = clock();
+    double t = (double)(en-st)/CLOCKS_PER_SEC;
+    printf("Evaluated %d ants each\n",NI*NA);
+    printf("Took time %f\n",t);
     return 0;
 }
