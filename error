@@ -2,3 +2,4 @@ make: Warning: File `makefile' has modification time 2.2e+04 s in the future
 make: warning:  Clock skew detected.  Your build may be incomplete.
 make: Warning: File `makefile' has modification time 2.2e+04 s in the future
 make: warning:  Clock skew detected.  Your build may be incomplete.
+/var/spool/PBS/mom_priv/jobs/52364.gnr.SC: line 13: 14052 Segmentation fault      (core dumped) ./test_aco_cu < input

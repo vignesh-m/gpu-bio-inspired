@@ -94,8 +94,8 @@ int ant_colony_opt_tsp(int n, double* gadj, int *path, double &cost)
         Ant Colony System, specific to TSP
         Takes weighted graph input <g>, fills up best found path in <path>
     */
-    int NI = 10,
-        NA = 10;
+    int NI = 100,
+        NA = 100;
         
     double *p = new double[n*n];
     for(int i=0;i<n*n;i++) p[i]=1e-5;
